@@ -1,0 +1,27 @@
+{
+  "name": "project-loop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "gatsby develop",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emfoundation/project-loop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emfoundation/project-loop/issues"
+  },
+  "homepage": "https://github.com/emfoundation/project-loop#readme",
+  "dependencies": {
+    "gatsby": "^2.19.22",
+    "gatsby-source-graphql": "^2.1.33",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
+  }
+}
