@@ -8,6 +8,7 @@ const IndexPage = () => {
   return (
     <>
       <h1>CI / CD Development</h1>
+      <p>Now being built on the Gatsby Cloud platform!!</p>
       <hr />
       <pre>
         <code>
