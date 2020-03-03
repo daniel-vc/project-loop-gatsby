@@ -9,6 +9,7 @@ const IndexPage = () => {
     <>
       <h1>CI / CD Development</h1>
       <p>Now being built on the Gatsby Cloud platform!!</p>
+      <p>How friggin cool is that!</p>
       <hr />
       <pre>
         <code>
