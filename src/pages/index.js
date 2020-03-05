@@ -1,13 +1,13 @@
 import React from 'react'
 import { useStaticQuery, graphql } from 'gatsby'
-
+import Header from '../components/header'
 
 const IndexPage = () => {
   const data = useStaticQuery(myQuery);
   console.log(data);
   return (
     <>
-      <h1>CI / CD Development</h1>
+      <Header siteTitle="Project Loop dev" />
       <p>Now being built on the Gatsby Cloud platform!!</p>
       <p>How friggin cool is that!</p>
       <p>Test: S3 should pick up this new change, from master</p>
