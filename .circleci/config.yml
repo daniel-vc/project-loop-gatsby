@@ -6,11 +6,11 @@ jobs:
     steps:
       - checkout # check out the code in the project directory
       - run: 
-        name: The First Step
-        command: |
-          echo "Hello world!"
-          echo "This is the delivery pipeline" 
+          name: The First Step
+          command: |
+            echo "Hello world!"
+            echo "This is the delivery pipeline" 
       - run:
-        command: |
-          ls -al
-          echo "^^^^That should look familiar^^^^"
+          command: |
+            ls -al
+            echo "^^^^That should look familiar^^^^"
