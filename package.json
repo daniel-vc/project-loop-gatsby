@@ -8,9 +8,11 @@
     "test": "jest --watchAll",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
+    "start:ci:windows": "serve --no-clipboard --listen 8080",
     "test:e2e": "start-server-and-test dev http://localhost:8000 cy:open",
     "test:e2e:ci": "start-server-and-test dev http://localhost:8000 cy:run",
     "cy:verify": "cypress verify",
+    "cy:info": "cypress info",
     "start:ci": "serve --no-clipboard --listen ${PORT:-8080}",
     "e2e:record": "cypress run --record"
   },
