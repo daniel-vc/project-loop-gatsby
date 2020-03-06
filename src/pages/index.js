@@ -11,6 +11,7 @@ const IndexPage = () => {
       <p>Now being built on the Gatsby Cloud platform!!</p>
       <p>How friggin cool is that!</p>
       <p>Test: S3 should pick up this new change, from master</p>
+      <p>Testing this from the alter-config branch</p>
       <hr />
       <pre>
         <code>
