@@ -14,3 +14,8 @@ jobs:
           command: |
             ls -al
             echo "^^^^That should look familiar^^^^"
+      - run:
+          name: Install packages
+          command: |
+            npm i
+
