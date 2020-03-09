@@ -16,6 +16,8 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Say Hello
+    - run: echo "Hello World"
 
     # - name: Cache NPM dependencies
     # - uses: actions/cache@v1
@@ -34,8 +36,7 @@ jobs:
       
     # - name: Install Dependencies
     #   run: npm install
-    - name: Say Hello
-      run: echo "Hello World"
+    
 
   # - run: npm ci
   # - run: npm run build --if-present
