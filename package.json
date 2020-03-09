@@ -7,7 +7,7 @@
     "dev": "gatsby develop",
     "test": "jest --watchAll",
     "cy:open": "cypress open",
-    "cy:run": "--record --key 34c01f38-fe0c-49d8-8c2c-03eb85d1a308",
+    "cy:run": "cypress run",
     "test:e2e": "start-server-and-test dev http://localhost:8000 cy:open",
     "test:e2e:ci": "start-server-and-test dev http://localhost:8000 cy:run",
     "cy:verify": "cypress verify",
