@@ -5,7 +5,8 @@ on: pull_request
 jobs:
   run_pr_check:
     name: EMF PR Checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
+    # runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [10.x]
