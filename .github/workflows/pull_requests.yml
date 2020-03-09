@@ -4,7 +4,6 @@ on: pull_request
 
 jobs:
   run_pr_check:
-    name: Run PR checks
     runs-on: ubuntu-latest
 
     strategy:
