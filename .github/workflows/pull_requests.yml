@@ -6,11 +6,9 @@ jobs:
   run_pr_check:
     name: EMF PR Checks
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [10.x]
-
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -24,14 +22,6 @@ jobs:
         key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.OS }}-npm-cache-
-      
-        # path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-        # key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        # restore-keys: |
-        #   ${{ runner.os }}-build-${{ env.cache-name }}-
-        #   ${{ runner.os }}-build-
-        #   ${{ runner.os }}- ~
-      
     - name: Install Dependencies
       run: npm install
     - name: Say Hello
