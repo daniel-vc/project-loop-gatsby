@@ -1,9 +1,10 @@
-name: EMF PR Checks
+name: PR Checks
 
 on: pull_request
 
 jobs:
   run_pr_check:
+    - name: EMF PR Checks
     runs-on: ubuntu-latest
 
     strategy:
