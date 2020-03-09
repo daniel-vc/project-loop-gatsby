@@ -24,8 +24,12 @@ jobs:
           ${{ runner.OS }}-npm-cache-
     - name: Install Dependencies
       run: npm install
-    - name: Say Hello
-      run: echo "Hello World"
+    - name: Run End-to-end tests
+      uses: cypress-io/github-action@v1
+        with:
+          browser: chrome
+    # - name: Say Hello
+    #   run: echo "Hello World"
 
   # - run: npm ci
   # - run: npm run build --if-present
