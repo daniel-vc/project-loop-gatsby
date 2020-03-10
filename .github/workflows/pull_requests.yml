@@ -10,7 +10,7 @@ jobs:
         run: echo "::set-output name=id::$date +%s)"
       - name: 'Cache .build-id'
         uses: actions/cache@v1
-        width:
+        with:
           path: ${{ github.workspace }}/.build-id
           key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}-${{ steps.build_id.outputs.id }}
       - name: 'Save build id'
