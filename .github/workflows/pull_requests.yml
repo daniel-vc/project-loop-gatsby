@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        machines: [1, 2 ,3]
+        containers: [1, 2 ,3]
     - name: Run End-to-end tests
       steps:
         # - name: Checkout
