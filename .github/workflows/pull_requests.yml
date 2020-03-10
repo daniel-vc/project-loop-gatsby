@@ -39,3 +39,4 @@ jobs:
         wait-on: http://localhost:8000
       env:
         CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
+        GITHUB_TOKEN: ${{ secrets.githubToken }}
