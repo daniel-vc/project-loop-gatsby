@@ -31,6 +31,7 @@ jobs:
         node-version: [10.x]
         containers: [1, 2 ,3]
     steps:
+    - name: Checkout
     - uses: actions/checkout@v2
     - name: 'Cache .build-id'
       uses: actions/cache@v1
@@ -43,7 +44,7 @@ jobs:
     - name: 'Set build id'
       id: build_id
       run: echo "::set-output name=id::$(cat .build-id/id)"
-    # - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
