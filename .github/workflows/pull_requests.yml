@@ -4,7 +4,7 @@ on: pull_request
 
 jobs:
   build_id:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     steps:
       - name: 'Set build id'
         id: build_id
