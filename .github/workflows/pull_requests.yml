@@ -29,27 +29,27 @@ jobs:
     
   run_e2e_tests:
     needs: run_pr_check
-    - name: Run End-to-end tests
-      runs-on: ubuntu-16.04
-      strategy:
-        fail-fast: false
-        matrix:
-          containers: [1, 2 ,3]
-        steps:
-          - name: Checkout
-            uses: actions/checkout@v1
-          - name: Cypress run
-            uses: cypress-io/github-action@v1
-            timeout-minutes: 10
-            with:
-              record: true
-              parallel: true
-              group: 'Cypress group example'
-              # build: npm run test:e2e:ci
-              start: npm run test:e2e:ci
-              wait-on: http://localhost:8000
-            env:
-              CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
+      # - name: Run End-to-end tests
+      #   runs-on: ubuntu-16.04
+      #   strategy:
+      #     fail-fast: false
+      #     matrix:
+      #       containers: [1, 2 ,3]
+      #   steps:
+      #     - name: Checkout
+      #       uses: actions/checkout@v2
+      #     - name: Cypress run
+      #       uses: cypress-io/github-action@v1
+      #       timeout-minutes: 10
+      #       with:
+      #         record: true
+      #         parallel: true
+      #         group: 'Cypress group example'
+      #         # build: npm run test:e2e:ci
+      #         start: npm run test:e2e:ci
+      #         wait-on: http://localhost:8000
+      #       env:
+      #         CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
 
   # - run: npm ci
   # - run: npm run build --if-present
