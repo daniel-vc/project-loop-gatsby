@@ -28,7 +28,7 @@ jobs:
       run: npm install
     
   run_e2e_tests:
-    - needs: run_pr_check
+    needs: run_pr_check
       name: Run End-to-end tests
       runs-on: ubuntu-16.04
       strategy:
