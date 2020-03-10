@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-16.04
     # runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version: [10.x]
-        fail-fast: false
         containers: [1, 2 ,3]
     steps:
     - uses: actions/checkout@v2
