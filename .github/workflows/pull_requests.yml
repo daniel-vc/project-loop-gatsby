@@ -70,5 +70,5 @@ jobs:
         wait-on: http://localhost:3030
         ci-build-id: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
       env:
-        CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
+        # CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
