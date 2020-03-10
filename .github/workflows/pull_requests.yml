@@ -39,9 +39,3 @@ jobs:
         wait-on: http://localhost:8000
       env:
         CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
-
-  # - run: npm ci
-  # - run: npm run build --if-present
-  # - run: npm test
-  #   env:
-  #     CI: true
