@@ -3,7 +3,25 @@ name: PR Checks
 on: pull_request
 
 jobs:
+  build_id:
+    steps:
+      - name: 'Set build id'
+        id: build_id
+        run: echo "::set-output name=id::$date +%s)"
+      - name: 'Cache .build-id'
+        uses: actions/cache@v1
+        width:
+          path: ${{ github.workspace }}/.build-id
+          key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}-${{ steps.build_id.outputs.id }}
+      - name: 'Save build id'
+        run: |
+          mkdir -p .build-id 
+          echo $BUILD_ID > .build-id/id
+        env:
+          BUILD_ID: ${{ steps.build_id.outputs.id }}
+
   run_pr_check:
+    needs: build_id
     name: EMF PR Checks
     runs-on: ubuntu-16.04
     # runs-on: ubuntu-latest
@@ -14,7 +32,18 @@ jobs:
         containers: [1, 2 ,3]
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: 'Cache .build-id'
+      uses: actions/cache@v1
+      with:
+        path: ${{ github.workspace }}/.build-id
+        key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}
+    # set the build id from the restored cache
+    - name: 'Set build id'
+      id: build_id
+      run: echo "::set-output name=id::$(cat .build-id/id)"
+    # - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
@@ -37,6 +66,7 @@ jobs:
         # build: npm run test:e2e:ci
         start: npm run test:e2e:ci
         wait-on: http://localhost:8000
+        ci-build-id: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
       env:
         CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
