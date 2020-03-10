@@ -28,16 +28,16 @@ jobs:
       run: npm install
     
   run_e2e_tests:
+  - name: Run End-to-end tests
     needs: run_pr_check
     runs-on: ubuntu-16.04
     strategy:
       fail-fast: false
       matrix:
         containers: [1, 2 ,3]
-    - name: Run End-to-end tests
       steps:
-        # - name: Checkout
-        #   uses: actions/checkout@v1
+        - name: Checkout
+          uses: actions/checkout@v1
         - name: Cypress run
           uses: cypress-io/github-action@v1
           timeout-minutes: 10
