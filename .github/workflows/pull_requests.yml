@@ -12,6 +12,6 @@ jobs:
         with:
           spec: cypress/integration/examples/actions.spec.js
           start: npm run test:e2e:ci
-          wait-on: http://localhost:3030
+          wait-on: http://localhost:8080
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
