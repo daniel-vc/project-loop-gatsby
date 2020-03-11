@@ -1,7 +1,5 @@
 name: PR Checks
-
 on: pull_request
-
 jobs:
   build_id:
     runs-on: ubuntu-16.04
