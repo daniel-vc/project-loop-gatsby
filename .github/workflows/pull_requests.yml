@@ -3,7 +3,14 @@ name: PR Checks
 on: pull_request
 
 jobs:
+  lint_check:
+    name: Run Lint checking
+    uses: halle/eslint-action@master
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   run_pr_check:
+    needs: lint_check
     name: EMF PR Checks
     runs-on: ubuntu-latest
     strategy:
