@@ -9,6 +9,7 @@ jobs:
     strategy:
       matrix:
         node-version: [10.x]
+        containers: [1, 2, 3]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -33,11 +34,11 @@ jobs:
         with:
           # install: false
           browser: chrome
-          # parallel: true
+          parallel: true
           # record: true
           spec: cypress/integration/examples/actions.spec.js
           start: npm run test:e2e:ci
-          wait-on: http://localhost:8000
+          wait-on: http://localhost:8080
           # group: Tests on Node v${{ matrix.node }}
           cache-key: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
         env:
