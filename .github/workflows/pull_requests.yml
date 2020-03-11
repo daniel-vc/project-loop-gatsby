@@ -2,7 +2,7 @@ name: PR Checks
 on: pull_request
 jobs:
   build_id:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
       - name: 'Set build id'
         id: build_id
@@ -21,7 +21,7 @@ jobs:
   run_pr_check:
     needs: build_id
     name: EMF PR Checks
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     # runs-on: ubuntu-latest
     strategy:
       fail-fast: false
