@@ -1,7 +1,8 @@
-name: End-to-end tests
+name: PR Checks
 on: [pull_request]
 jobs:
-  cypress-run:
+  run_pr_check:
+    name: EMF PR Checks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
