@@ -1,36 +1,18 @@
-name: tests
+name: E2E on Chrome
 on: [pull_request]
 jobs:
-  tests:
+  cypress-run:
     runs-on: ubuntu-latest
-    name: tests
-    env:
-      # prevents extra Cypress installation progress messages
-      CI: 1
-      # avoid warnings like "tput: No value for $TERM and no -T specified"
-      TERM: xterm
+    # let's make sure our tests pass on Chrome browser
+    name: E2E on Chrome
     steps:
-      - uses: actions/checkout@v1
-      # install NPM dependencies but SKIP Cypress binary installation
-      # see https://on.cypress.io/installing-cypress#Environment-variables
-      - uses: bahmutov/npm-install@v1
-        env:
-          CYPRESS_INSTALL_BINARY: 0
-      # confirm there is no Cypress installed
-      - run: npx cypress cache path
-      # should return empty list of installed versions
-      - run: npx cypress cache list
-      # restore / cache the binary ourselves on Linux
-      # see https://github.com/actions/cache
-      - name: Cache Cypress
-        id: cache-cypress
-        uses: actions/cache@v1
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Cypress run
+        uses: cypress-io/github-action@v1
         with:
-          path: ~/.cache/Cypress
-          key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
-      # now let's install Cypress binary
-      - run: npx cypress install
-      - run: npx cypress cache list
-      # and run Cypress tests
-      - run: npx cypress run
-      # Cypress binary will be cached after successful workflow finish
+          browser: chrome
+          record: false
+          group: Tests on Chrome
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
