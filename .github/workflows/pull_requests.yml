@@ -38,7 +38,7 @@ jobs:
           spec: cypress/integration/examples/actions.spec.js
           start: npm run test:e2e:ci
           wait-on: http://localhost:8080
-          group: Tests on Node v${{ matrix.node }}
+          # group: Tests on Node v${{ matrix.node }}
           # cache-key: node-v${{ matrix.node }}-on-${{ runner.os }}-hash-${{ hashFiles('package-lock.lock') }}
           cache-key: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
         env:
