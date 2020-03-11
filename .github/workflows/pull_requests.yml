@@ -59,7 +59,7 @@ jobs:
       uses: cypress-io/github-action@v1
       # timeout-minutes: 10
       with:
-        install: false
+        # install: false
         record: false
         parallel: true
         group: 'Cypress group example'
