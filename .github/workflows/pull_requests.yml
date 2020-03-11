@@ -42,5 +42,5 @@ jobs:
           # cache-key: node-v${{ matrix.node }}-on-${{ runner.os }}-hash-${{ hashFiles('package-lock.lock') }}
           cache-key: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
         env:
-          CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
+          # CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
