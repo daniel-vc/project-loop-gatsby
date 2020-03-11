@@ -6,9 +6,9 @@ jobs:
   lint_check:
     name: Run Lint checking
     steps:
-      uses: halle/eslint-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: halle/eslint-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   run_pr_check:
     needs: lint_check
