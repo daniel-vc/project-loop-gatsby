@@ -6,27 +6,27 @@ jobs:
   run_pr_check:
     name: EMF PR Checks
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x]
+    # strategy:
+    #   matrix:
+    #     node-version: [10.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+      # - name: Use Node.js ${{ matrix.node-version }}
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
 
-      - name: Cache NPM dependencies
-        uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-npm-cache-
-      - name: Install Dependencies
-        run: npm install
+      # - name: Cache NPM dependencies
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: node_modules
+      #     key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.OS }}-npm-cache-
+      # - name: Install Dependencies
+      #   run: npm install
 
       - name: Run e2e tests
         uses: cypress-io/github-action@v1
