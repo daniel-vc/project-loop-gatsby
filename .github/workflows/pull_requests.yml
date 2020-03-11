@@ -12,6 +12,8 @@ jobs:
         uses: cypress-io/github-action@v1
         with:
           browser: chrome
+          spec: cypress/integration/examples/actions.spec.js
+          start: npm run test:e2e:ci
           record: false
           group: Tests on Chrome
         env:
