@@ -16,6 +16,7 @@ jobs:
       - name: Run e2e tests
         uses: cypress-io/github-action@v1
         with:
+          install: false
           browser: chrome
           parallel: true
           spec: cypress/integration/examples/actions.spec.js
