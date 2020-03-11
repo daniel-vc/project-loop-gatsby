@@ -4,14 +4,20 @@ jobs:
   run_pr_check:
     name: EMF PR Checks
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [10.x]
+        containers: [1, 2, 3]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Cypress run
+      - name: Run e2e tests
         uses: cypress-io/github-action@v1
         with:
           browser: chrome
+          parallel: true
           spec: cypress/integration/examples/actions.spec.js
           start: npm run test:e2e:ci
           wait-on: http://localhost:8080
