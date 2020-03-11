@@ -69,6 +69,7 @@ jobs:
         spec: cypress/integration/examples/actions.spec.js
         # start: npm run test:e2e:ci
         start: npm start
+        
         wait-on: http://localhost:8080
         wait-on-timeout: 120
         config-file: cypress.json
