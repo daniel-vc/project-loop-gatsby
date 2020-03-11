@@ -1,20 +1,17 @@
-name: E2E on Chrome
-on: [pull_request]
+name: End-to-end tests
+on: [pull_requests]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    
-    name: E2E on Chrome
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+
       - name: Cypress run
         uses: cypress-io/github-action@v1
         with:
-          browser: chrome
           spec: cypress/integration/examples/actions.spec.js
           start: npm run test:e2e:ci
-          record: false
-          group: Tests on Chrome
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          wait-on: http://localhost:3030
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
