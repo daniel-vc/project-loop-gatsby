@@ -10,7 +10,7 @@ jobs:
       matrix:
         node-version: [10.x]
     steps:
-      - uses: halle/eslint-action@master
+      - uses: eslint-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
