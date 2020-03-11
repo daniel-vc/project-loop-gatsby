@@ -1,80 +1,36 @@
-name: PR Checks
-on: pull_request
+name: tests
+on: [push]
 jobs:
-  build_id:
+  tests:
     runs-on: ubuntu-latest
+    name: tests
+    env:
+      # prevents extra Cypress installation progress messages
+      CI: 1
+      # avoid warnings like "tput: No value for $TERM and no -T specified"
+      TERM: xterm
     steps:
-      - name: 'Set build id'
-        id: build_id
-        run: echo "::set-output name=id::$date +%s)"
-      - name: 'Cache .build-id'
+      - uses: actions/checkout@v1
+      # install NPM dependencies but SKIP Cypress binary installation
+      # see https://on.cypress.io/installing-cypress#Environment-variables
+      - uses: bahmutov/npm-install@v1
+        env:
+          CYPRESS_INSTALL_BINARY: 0
+      # confirm there is no Cypress installed
+      - run: npx cypress cache path
+      # should return empty list of installed versions
+      - run: npx cypress cache list
+      # restore / cache the binary ourselves on Linux
+      # see https://github.com/actions/cache
+      - name: Cache Cypress
+        id: cache-cypress
         uses: actions/cache@v1
         with:
-          path: ${{ github.workspace }}/.build-id
-          key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}-${{ steps.build_id.outputs.id }}
-      - name: 'Save build id'
-        run: |
-          mkdir -p .build-id 
-          echo $BUILD_ID > .build-id/id
-        env:
-          BUILD_ID: ${{ steps.build_id.outputs.id }}
-  run_pr_check:
-    needs: build_id
-    name: EMF PR Checks
-    runs-on: ubuntu-latest
-    # runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [10.x]
-        containers: [1, 2 ,3]
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: 'Cache .build-id'
-      uses: actions/cache@v1
-      with:
-        path: ${{ github.workspace }}/.build-id
-        key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}
-    # set the build id from the restored cache
-    - name: 'Set build id'
-      id: build_id
-      run: echo "::set-output name=id::$(cat .build-id/id)"
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Cache NPM dependencies
-      uses: actions/cache@v1
-      with:
-        path: node_modules
-        key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.OS }}-npm-cache-
-    - name: Install Dependencies
-      run: npm install
-    - name: Run End-to-end tests
-      uses: cypress-io/github-action@v1
-      # timeout-minutes: 10
-      with:
-        # install: false
-        record: false
-        parallel: true
-        group: 'Cypress group example'
-        # build: npm run test:e2e:ci
-        # start: npm run test:e2e:ci
-        browser: chrome
-        spec: cypress/integration/examples/actions.spec.js
-        # start: npm run test:e2e:ci
-        start: npm start
-        
-        wait-on: http://localhost:8080
-        wait-on-timeout: 120
-        config-file: cypress.json
-        ci-build-id: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
-    # - run: npx cypress run
-      env:
-        # CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: ~/.cache/Cypress
+          key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
+      # now let's install Cypress binary
+      - run: npx cypress install
+      - run: npx cypress cache list
+      # and run Cypress tests
+      - run: npx cypress run
+      # Cypress binary will be cached after successful workflow finish
