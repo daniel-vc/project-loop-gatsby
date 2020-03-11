@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "gatsby develop",
     "test": "jest --watchAll",
+    "start": "serve --no-clipboard --listen ${PORT:-3030}",
     "cy:open": "cypress open",
     "cy:run": "cypress run --parallel",
     "test:e2e": "start-server-and-test dev http://localhost:8000 cy:open",
