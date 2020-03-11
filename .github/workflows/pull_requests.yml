@@ -5,6 +5,10 @@ on: pull_request
 jobs:
   lint_check:
     name: Run Lint checking
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
     steps:
       - uses: halle/eslint-action@master
         env:
