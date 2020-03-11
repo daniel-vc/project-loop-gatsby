@@ -59,13 +59,16 @@ jobs:
       uses: cypress-io/github-action@v1
       # timeout-minutes: 10
       with:
-        record: true
+        install: false
+        record: false
         parallel: true
         group: 'Cypress group example'
         # build: npm run test:e2e:ci
         # start: npm run test:e2e:ci
+        browser: chrome
+        spec: cypress/integration/examples/actions.spec.js
         start: npm run test:e2e:ci
-        wait-on: http://localhost:3030
+        wait-on: http://localhost:8080
         ci-build-id: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
       env:
         # CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
