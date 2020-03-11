@@ -1,5 +1,7 @@
 name: PR Checks
+
 on: [pull_request]
+
 jobs:
   run_pr_check:
     name: EMF PR Checks
