@@ -3,7 +3,25 @@ name: PR Checks
 on: [pull_request]
 
 jobs:
+  build_id:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Set build id'
+        id: build_id
+        run: echo "::set-output name=id::$date +%s)"
+      - name: 'Cache .build-id'
+        uses: actions/cache@v1
+        with:
+          path: ${{ github.workspace }}/.build-id
+          key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}-${{ steps.build_id.outputs.id }}
+      - name: 'Save build id'
+        run: |
+          mkdir -p .build-id 
+          echo $BUILD_ID > .build-id/id
+        env:
+          BUILD_ID: ${{ steps.build_id.outputs.id }}
   run_pr_check:
+    needs: build_id
     name: EMF PR Checks
     runs-on: ubuntu-latest
     strategy:
@@ -14,6 +32,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      - name: 'Cache .build-id'
+        uses: actions/cache@v1
+        with:
+          path: ${{ github.workspace }}/.build-id
+          key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}
+
+      - name: 'Set build id'
+        id: build_id
+        run: echo "::set-output name=id::$(cat .build-id/id)"
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache NPM dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-
+      - name: Install Dependencies
+        run: npm install
 
       - name: Run e2e tests
         uses: cypress-io/github-action@v1
