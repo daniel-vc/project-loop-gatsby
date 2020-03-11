@@ -67,8 +67,9 @@ jobs:
         # start: npm run test:e2e:ci
         browser: chrome
         spec: cypress/integration/examples/actions.spec.js
-        start: npm run test:e2e:ci
+        # start: npm run test:e2e:ci
         wait-on: http://localhost:3000
+        config-file: cypress.json
         ci-build-id: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
     # - run: npx cypress run
       env:
