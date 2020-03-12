@@ -1,6 +1,6 @@
 name: PR Checks
 
-on: push
+on: [pull_request, push]
 
 jobs:
   linting_checks:
@@ -51,44 +51,44 @@ jobs:
         # with:
         #   files: src/pages
 
-  # run_pr_check:
-  #   needs: lint_check
-  #   name: EMF PR Checks
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [10.x]
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v1
+  run_pr_check:
+    needs: linting_checks
+    name: EMF PR Checks
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
 
-  #     - name: Use Node.js ${{ matrix.node-version }}
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-  #     - name: Cache NPM dependencies
-  #       uses: actions/cache@v1
-  #       with:
-  #         path: node_modules
-  #         key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
-  #         restore-keys: |
-  #           ${{ runner.OS }}-npm-cache-
-  #     - name: Install Dependencies
-  #       run: npm install
+      - name: Cache NPM dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-
+      - name: Install Dependencies
+        run: npm install
 
-  #     - name: Run e2e tests
-  #       uses: cypress-io/github-action@v1
-  #       with:
-  #         # install: false
-  #         browser: chrome
-  #         # parallel: true
-  #         # record: true
-  #         spec: cypress/integration/examples/actions.spec.js
-  #         start: npm run test:e2e:ci
-  #         wait-on: http://localhost:8000
-  #         # group: Tests on Node v${{ matrix.node }}
-  #         cache-key: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
-  #       env:
-  #         # CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run e2e tests
+        uses: cypress-io/github-action@v1
+        with:
+          # install: false
+          browser: chrome
+          # parallel: true
+          # record: true
+          spec: cypress/integration/examples/actions.spec.js
+          start: npm run test:e2e:ci
+          wait-on: http://localhost:8000
+          # group: Tests on Node v${{ matrix.node }}
+          cache-key: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
+        env:
+          # CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
