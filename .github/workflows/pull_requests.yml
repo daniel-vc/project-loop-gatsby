@@ -3,15 +3,39 @@ name: PR Checks
 on: push
 
 jobs:
-  lint_check:
-    name: Run Lint checking
+  linting_checks:
+    name: Run linters
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x]
+
     steps:
-      - uses: actions/checkout@v1
-      - uses: stefanoeb/eslint-action@1.0.2
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      # ESLint and Prettier must be in `package.json`
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Run linters
+        uses: samuelmeuli/lint-action@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          # Enable linters
+          eslint: true
+          prettier: true
+  # lint_check:
+  #   name: Run Lint checking
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [10.x]
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: stefanoeb/eslint-action@1.0.2
         # with:
         #   files: src/pages
 
