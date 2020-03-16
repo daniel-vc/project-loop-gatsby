@@ -1,6 +1,0 @@
-{
-  "extends": "kentcdodds",
-  "rules": {
-    // your overrides
-  }
-}
