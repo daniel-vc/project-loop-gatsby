@@ -36,7 +36,7 @@ jobs:
           github_token: ${{ secrets.github_token }}
           eslint: true
           eslint_args: "--no-eslintrc"
-          eslint_dir: ["src/components/", "src/pages/"]
+          eslint_dir: src/components/
 
   run_pr_check:
     needs: linting_checks
