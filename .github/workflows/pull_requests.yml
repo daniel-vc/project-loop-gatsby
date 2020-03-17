@@ -86,6 +86,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
+  coverage_check:
+    needs: [unit_tests, run_pr_check]
+    - uses: devmasx/coverage-check-action@v1.1.0
+      with:
+        type: simplecov
+        result_path: coverage/.last_run.json
+        min_coverage: 90
+        token: ${{secrets.GITHUB_TOKEN}}
+
+
       # - name: Run e2e tests
       #   uses: cypress-io/github-action@v1
       #   with:
