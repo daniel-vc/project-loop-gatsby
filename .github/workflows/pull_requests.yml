@@ -89,8 +89,3 @@ jobs:
         env:
           # CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Slack notification
-        uses: rtCamp/action-slack-notify@v2.0.0
-        env:
-          SLACK_USERNAME: EMF_PR_BOT
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
