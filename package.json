@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "gatsby develop",
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --collectCoverage",
     "start": "serve --no-clipboard --listen ${PORT:-8000}",
     "cy:open": "cypress open",
     "cy:run": "cypress run --parallel",
