@@ -29,7 +29,6 @@ jobs:
             ${{ runner.OS }}-npm-cache-
       - name: Install Node.js dependencies
         run: npm install
-
       - name: Run linters
         uses: samuelmeuli/lint-action@v1
         with:
@@ -90,3 +89,12 @@ jobs:
         env:
           # CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  run_slack_feedback:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack notification
+      uses: rtCamp/action-slack-notify@v2.0.0
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
