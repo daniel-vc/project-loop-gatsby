@@ -88,6 +88,7 @@ jobs:
 
   coverage_check:
     needs: [unit_tests, run_pr_check]
+    runs-on: ubuntu-latest
     steps:
       - name: Run coverage chceck
         uses: devmasx/coverage-check-action@v1.1.0
