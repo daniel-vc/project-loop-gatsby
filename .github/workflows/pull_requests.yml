@@ -89,7 +89,8 @@ jobs:
   coverage_check:
     needs: [unit_tests, run_pr_check]
     runs-on: ubuntu-latest
-    - uses: ziishaned/jest-reporter-action@v0.0.1
+    - name: Run coverage
+      uses: ziishaned/jest-reporter-action@v0.0.1
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
       # test-command: "yarn jest --coverage"
