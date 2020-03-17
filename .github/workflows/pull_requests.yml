@@ -38,8 +38,19 @@ jobs:
           eslint_args: "--no-eslintrc"
           eslint_dir: src/
 
+  unit_tests:
+    # needs: linting_checks
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run Unit Tests
+      uses: stefanoeb/jest-action@1.0.2
+      with:
+        jestArgs: __tests__
+      
+
   run_pr_check:
-    needs: linting_checks
+    needs: [linting_checks, unit_tests]
     name: EMF PR Checks
     runs-on: ubuntu-latest
     strategy:
