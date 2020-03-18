@@ -10,6 +10,7 @@ const IndexPage = () => {
       <Header siteTitle="Project Loop dev" />
       <p>Now being built on the Gatsby Cloud platform!!</p>
       <p>How friggin cool is that!</p>
+      <p>Will this work?</p>
       <p>Test: S3 should pick up this new change, from master</p>
       <hr />
       <pre>
