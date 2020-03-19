@@ -1,0 +1,122 @@
+name: PR Checks
+
+on: [pull_request]
+
+jobs:
+  # linting_checks:
+  #   name: Run linters
+  #   runs-on: ubuntu-latest
+
+  #   strategy:
+  #     matrix:
+  #       node-version: [10.x]
+
+  #   steps:
+  #     - name: Check out Git repository
+  #       uses: actions/checkout@v2
+
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+
+  #     - name: Cache NPM dependencies
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.OS }}-npm-cache-
+  #     - name: Install Node.js dependencies
+  #       run: npm install
+  #     - name: Run linters
+  #       uses: samuelmeuli/lint-action@v1
+  #       with:
+  #         github_token: ${{ secrets.github_token }}
+  #         eslint: true
+  #         eslint_args: "--no-eslintrc"
+  #         eslint_dir: src/
+
+  unit_tests:
+    # needs: linting_checks
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run Unit Tests
+      uses: stefanoeb/jest-action@1.0.2
+      with:
+        jestArgs: __tests__
+      
+
+  run_pr_check:
+    needs: [unit_tests]
+    name: EMF PR Checks
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache NPM dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run e2e tests
+        uses: cypress-io/github-action@v1
+        with:
+          browser: chrome
+          spec: cypress/integration/examples/actions.spec.js
+          start: npm run test:e2e:ci
+          wait-on: http://localhost:8000
+          cache-key: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  # coverage_check:
+  #   needs: [unit_tests, run_pr_check]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Run coverage
+  #       uses: ziishaned/jest-reporter-action@v0.0.1
+  #       with:
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+      # test-command: "yarn jest --coverage"
+    # steps:
+    #   - name: Run coverage chceck
+    #     uses: devmasx/coverage-check-action@v1.1.0
+    #     with:
+    #       type: lcov
+    #       result_path: coverage/example.lcov
+    #       min_coverage: 90
+    #       token: ${{secrets.GITHUB_TOKEN}}
+
+
+      # - name: Run e2e tests
+      #   uses: cypress-io/github-action@v1
+      #   with:
+      #     # install: false
+      #     browser: chrome
+      #     # parallel: true
+      #     # record: true
+      #     spec: cypress/integration/examples/actions.spec.js
+      #     start: npm run test:e2e:ci
+      #     wait-on: http://localhost:8000
+      #     # group: Tests on Node v${{ matrix.node }}
+      #     cache-key: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
+      #   env:
+      #     # CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "dev": "gatsby develop",
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --collectCoverage",
+    "start": "serve --no-clipboard --listen ${PORT:-8000}",
     "cy:open": "cypress open",
-    "cy:run": "cypress run",
+    "cy:run": "cypress run --parallel",
     "test:e2e": "start-server-and-test dev http://localhost:8000 cy:open",
-    "test:e2e:ci": "start-server-and-test dev http://localhost:8000 cy:run",
+    "test:e2e:ci": "start-server-and-test start http://localhost:8000 cy:run",
     "cy:verify": "cypress verify",
-    "start:ci": "serve --no-clipboard --listen ${PORT:-8080}",
+    "start:ci": "serve --no-clipboard --listen ${PORT:-8000}",
     "e2e:record": "cypress run --record"
   },
   "repository": {
@@ -37,6 +38,7 @@
     "babel-jest": "^25.1.0",
     "babel-preset-gatsby": "^0.2.29",
     "cypress": "^4.1.0",
+    "eslint": "^6.8.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.1.0",
     "react-test-renderer": "^16.13.0",
