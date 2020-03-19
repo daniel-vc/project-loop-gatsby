@@ -12,6 +12,7 @@ const IndexPage = () => {
       <p>How friggin cool is that!</p>
       <p>Test: S3 should pick up this new change, from master</p>
       <p>Making one last change</p>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde porro illum eaque omnis perferendis ipsa atque deserunt optio. Aperiam provident tenetur veritatis consequuntur repellat modi possimus velit odio laudantium placeat.</p>
       <hr />
       <pre>
         <code>
