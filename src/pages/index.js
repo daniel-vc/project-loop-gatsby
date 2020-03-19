@@ -13,6 +13,7 @@ const IndexPage = () => {
       <p>Test: S3 should pick up this new change, from master</p>
       <p>Making one last change</p>
       <p>Making one last change i promise</p>
+      <p>And another change</p>
       <hr />
       <pre>
         <code>
