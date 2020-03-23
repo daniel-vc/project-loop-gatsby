@@ -15,6 +15,7 @@ const IndexPage = () => {
       <p>Making one last change</p>
       <p>Making another change!</p>
       <p>Make one more...</p>
+      <p>Add another change...</p>
       <hr />
       <pre>
         <code>
@@ -42,12 +43,3 @@ const myQuery = graphql`
     }
   }
 `
-GATSBY_GRAPHQL_TOKEN
-2FmZQo2NLckZf4RzfeEOX8xtlRyJufB2
-
-
-Access key ID
-AKIA4C2F77QC53V3UR4N
-
-Secret
-
