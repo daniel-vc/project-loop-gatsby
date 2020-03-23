@@ -14,6 +14,7 @@ const IndexPage = () => {
       <p>Test this</p>
       <p>Making one last change</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime laboriosam similique impedit fugit earum expedita voluptatem nihil officiis. Unde et maiores repudiandae quidem culpa iure, quis beatae animi ratione nobis.</p>
+      <p>Another edit!</p>
       <hr />
       <pre>
         <code>
