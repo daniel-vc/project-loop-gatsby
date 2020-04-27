@@ -11,10 +11,7 @@ const IndexPage = () => {
       <p>Now being built on the Gatsby Cloud platform!!</p>
       <p>How friggin cool is that!</p>
       <p>Test: S3 should pick up this new change, from master</p>
-      <p>Test this</p>
-      <p>Making one last change</p>
-      <p>Making another change!</p>
-      <p>Make one more...</p>
+      <p>Just done another update</p>
       <hr />
       <pre>
         <code>{JSON.stringify(data, null, 2)}</code>
