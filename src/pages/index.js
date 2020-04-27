@@ -1,6 +1,6 @@
-import React from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
-import Header from '../components/header'
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
+import Header from "../components/header";
 
 const IndexPage = () => {
   const data = useStaticQuery(myQuery);
@@ -14,13 +14,11 @@ const IndexPage = () => {
       <p>Just done another update</p>
       <hr />
       <pre>
-        <code>
-          {JSON.stringify(data, null, 2)}
-        </code>
+        <code>{JSON.stringify(data, null, 2)}</code>
       </pre>
     </>
-  )
-}
+  );
+};
 
 export default IndexPage;
 
@@ -38,4 +36,4 @@ const myQuery = graphql`
       }
     }
   }
-`
+`;

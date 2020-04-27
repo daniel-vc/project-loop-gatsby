@@ -1,0 +1,76 @@
+name: PR Checks
+
+on: [pull_request]
+
+jobs:
+  build_id:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Set build id'
+        id: build_id
+        run: echo "::set-output name=id::$date +%s)"
+      - name: 'Cache .build-id'
+        uses: actions/cache@v1
+        with:
+          path: ${{ github.workspace }}/.build-id
+          key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}-${{ steps.build_id.outputs.id }}
+      - name: 'Save build id'
+        run: |
+          mkdir -p .build-id 
+          echo $BUILD_ID > .build-id/id
+        env:
+          BUILD_ID: ${{ steps.build_id.outputs.id }}
+  run_pr_check:
+    needs: build_id
+    name: EMF PR Checks
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [10.x]
+        containers: [1, 2, 3]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: 'Cache .build-id'
+        uses: actions/cache@v1
+        with:
+          path: ${{ github.workspace }}/.build-id
+          key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}
+
+      - name: 'Set build id'
+        id: build_id
+        run: echo "::set-output name=id::$(cat .build-id/id)"
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache NPM dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run e2e tests
+        uses: cypress-io/github-action@v1
+        with:
+          # install: false
+          browser: chrome
+          parallel: true
+          record: true
+          spec: cypress/integration/examples/actions.spec.js
+          start: npm run test:e2e:ci
+          wait-on: http://localhost:8080
+          group: Tests on Node v${{ matrix.node }}
+          # cache-key: node-v${{ matrix.node }}-on-${{ runner.os }}-hash-${{ hashFiles('package-lock.lock') }}
+          cache-key: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -25,5 +25,4 @@ module.exports = {
   StaticQuery: jest.fn(),
   useStaticQuery: jest.fn(),
 }
-
 // mocks the graphql() function, Link component, and StaticQuery component.
