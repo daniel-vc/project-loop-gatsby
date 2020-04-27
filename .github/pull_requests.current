@@ -3,7 +3,42 @@ name: PR Checks
 on: [pull_request]
 
 jobs:
+  # linting_checks:
+  #   name: Run linters
+  #   runs-on: ubuntu-latest
+
+  #   strategy:
+  #     matrix:
+  #       node-version: [10.x]
+
+  #   steps:
+  #     - name: Check out Git repository
+  #       uses: actions/checkout@v2
+
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+
+  #     - name: Cache NPM dependencies
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.OS }}-npm-cache-
+  #     - name: Install Node.js dependencies
+  #       run: npm install
+  #     - name: Run linters
+  #       uses: samuelmeuli/lint-action@v1
+  #       with:
+  #         github_token: ${{ secrets.github_token }}
+  #         eslint: true
+  #         eslint_args: "--no-eslintrc"
+  #         eslint_dir: src/
+
   unit_tests:
+    # needs: linting_checks
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -12,6 +47,7 @@ jobs:
       with:
         jestArgs: __tests__
       
+
   run_pr_check:
     needs: [unit_tests]
     name: EMF PR Checks
