@@ -27,7 +27,7 @@
   "homepage": "https://github.com/emfoundation/project-loop#readme",
   "dependencies": {
     "gatsby": "^2.19.27",
-    "gatsby-plugin-sharp": "^2.4.5",
+    "gatsby-plugin-sharp": "^4.25.1",
     "gatsby-source-graphql": "^2.1.33",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
